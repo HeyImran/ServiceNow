@@ -1,0 +1,22 @@
+var inc = new GlideRecord('incident');
+inc.addActiveQuery();
+inc.setLimit(10);
+inc.orderByDesc();
+inc.query();
+while(inc.next()){
+	gs.info('number:'+ inc.number +' '+ 'short_description:' + inc.short_description);
+}
+
+
+Out Put:
+
+*** Script: number:INC0010006 short_description:t
+*** Script: number:INC0008001 short_description:ATF:TEST2
+*** Script: number:INC0000015 short_description:I can't launch my VPN client since the last software update
+*** Script: number:INC0000016 short_description:Rain is leaking on main DNS Server
+*** Script: number:INC0000017 short_description:How do I create a sub-folder
+*** Script: number:INC0000018 short_description:Sales forecast spreadsheet is READ ONLY
+*** Script: number:INC0000019 short_description:Can't launch 64-bit Windows 7 virtual machine
+*** Script: number:INC0000020 short_description:I need a replacement iPhone, please
+*** Script: number:INC0000025 short_description:Need to add more memory to laptop
+*** Script: number:INC0000027 short_description:Please remove the latest hotfix from my PC
