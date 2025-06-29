@@ -6,4 +6,14 @@ Recently Faced ServiceNow Interview Questions: My Experience! Question 3 :
 
  Answer: 
 
-Get Incidents var gr = new GlideRecord('incident'); gr.orderByDesc('sys_updated_on'); // To get the most recently updated incidents gr.setLimit(10); // Set limit to fetch a certain number of incidents gr.query(); while(gr.next()) { gs.print('Incident Number: '+ gr.number + ', Updated On: ' gr.sys_updated_on); Send Notification: var incident = new GlideRecord('incident'); incident.get('sys_id', 'INCIDENT_SYS_ID'); // Replace with the sys_id of the incident you want to notify var callerSysld = incident.caller_id.sys_id; var message = 'Your incident has been recently updated: '+ incident.number; gs.eventQueue('incident.updated.notification', incident, callerSysId, message);
+//Get Incidents 
+var gr = new GlideRecord('incident'); 
+gr.orderByDesc('sys_updated_on'); // To get the most recently updated incidents 
+gr.setLimit(10); // Set limit to fetch a certain number of incidents 
+gr.query(); 
+while(gr.next()) { 
+gs.print('Incident Number: '+ gr.number + ', Updated On: ' gr.sys_updated_on); Send Notification: 
+var incident = new GlideRecord('incident'); incident.get('sys_id', 'INCIDENT_SYS_ID'); // Replace with the sys_id of the incident you want to notify 
+var callerSysld = incident.caller_id.sys_id; 
+var message = 'Your incident has been recently updated: '+ incident.number; 
+gs.eventQueue('incident.updated.notification', incident, callerSysId, message);
