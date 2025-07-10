@@ -1,0 +1,7 @@
+var ga = new GlideAggregate('incident'); 
+ga.addAggregate('COUNT'); 
+ga.groupBy('assignment_group'); 
+ga.query(); 
+while (ga.next()) { 
+gs.info(ga.getDisplayValue('assignment_group') + ': ' + ga.getAggregate('COUNT'));
+}
