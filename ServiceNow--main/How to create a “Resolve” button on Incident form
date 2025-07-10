@@ -1,0 +1,20 @@
+Table: incident 
+• Action: Form Button 
+• Condition: current.state != 6 
+• Script: 
+
+
+current.state = 6; 
+current.work_notes = 'Resolved by UI Action'; 
+current.update(); 
+action.setRedirectURL(current); 
+
+Table: Request 
+• Action: Form Button 
+• Condition: current.state != 3
+• Script: 
+
+current.state = 3; 
+current.work_notes = 'Resolved by UI Action'; 
+current.update(); 
+action.setRedirectURL(current); 
