@@ -1,0 +1,11 @@
+var gr = new GlideRecord('incident'); 
+var sevenDaysAgo = gs.daysAgoStart(7); // gets start of day 7 days ago
+
+gr.addQuery('state', 6); // Resolved
+gr.addQuery('resolved_at', '<=', sevenDaysAgo); 
+gr.query(); 
+
+while (gr.next()) { 
+    gr.state = 7; // Closed 
+    gr.update(); 
+}
