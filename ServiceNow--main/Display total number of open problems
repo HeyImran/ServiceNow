@@ -1,0 +1,8 @@
+var count = new GlideAggregate('problem');
+count.addAggregate('COUNT');
+count.addQuery('active', true);
+count.query();
+if (count.next()) {
+    var openCount = count.getAggregate('COUNT');
+    gs.info("Open Problems: " + openCount);  // Logged in system log
+}
