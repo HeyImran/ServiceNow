@@ -2,5 +2,18 @@ var grInc= new GlideRecord("incident");
 grInc.addQuery("state",3);
 grInc.query();
 while(grInc.next()){
-	gs.print(grInc.number); (We can use gs.info as well ex: gs.info(grInc.number);)
+	gs.print(grInc.number); // Note: We can use gs.info as well ex: gs.info(grInc.number);
 }
+
+
+/* Output:
+
+*** Script: INC0000017
+*** Script: INC0000040
+*** Script: INC0010012
+*** Script: INC0000007
+*** Script: INC0000002
+*** Script: INC0001990
+*** Script: INC0000048
+*** Script: INC0000054
+*/
