@@ -1,5 +1,5 @@
 var gr = new GlideRecord('incident'); 
-var sevenDaysAgo = gs.daysAgoStart(7); // gets start of day 7 days ago
+var sevenDaysAgo = gs.daysAgo(7); // gets start of day 7 days ago
 
 gr.addQuery('state', 6); // Resolved
 gr.addQuery('resolved_at', '<=', sevenDaysAgo); 
