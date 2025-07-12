@@ -1,0 +1,9 @@
+//GlideAggregate Code:   
+
+var ga = new GlideAggregate('incident'); 
+ga.addAggregate('COUNT'); 
+ga.groupBy('category'); 
+ga.query(); 
+while (ga.next()) { 
+gs.info("Category: " + ga.getValue('category') + ", Count: " + ga.getAggregate('COUNT')); 
+}
