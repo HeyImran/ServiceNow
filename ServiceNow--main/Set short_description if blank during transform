@@ -1,0 +1,4 @@
+Transform Script (onBefore):   
+if (!target.short_description) { 
+target.short_description = 'Imported on ' + new Date(); 
+}
