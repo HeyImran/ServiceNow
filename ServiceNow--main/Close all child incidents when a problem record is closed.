@@ -1,0 +1,36 @@
+(function executeRule(current, previous) {
+
+    if (current.state == 106 && previous.state != 106) {
+        //gs.info("✅ Problem " + current.number + " moved to Resolved (106). Starting closure of linked incidents.");
+
+        var inc = new GlideRecord('incident');
+        inc.addQuery('problem_id', current.sys_id);
+        inc.query();
+        
+        while (inc.next()) {
+
+            //gs.info("👉 Updating Incident: " + inc.number);
+
+            inc.state = 6;  // Or use .state = 6
+            inc.work_notes = "Closed via Problem: " + current.number;
+			inc.close_code ='Resolved by problem';
+			inc.close_notes ="Closed via Problem: " + current.number;
+            inc.setWorkflow(false);
+            inc.update();
+
+            //gs.info("✅ Incident " + inc.number + " updated to state 6");
+        }
+
+//         if (found === 0) {
+//     gs.info("⚠️ No incidents found linked to Problem: " + current.number);
+// }
+//     } else {
+//     gs.info("ℹ️ Problem state did not change to 106. Current: " + current.state + ", Previous: " + previous.state);
+ }
+
+})(current, previous);
+
+
+/*
+We need to provide close code and close notes while closing the incidents as the data policies restrict and won't allow to close the Incidents.
+*/
