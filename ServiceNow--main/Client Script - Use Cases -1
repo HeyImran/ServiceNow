@@ -27,7 +27,7 @@ Description: Make the "Short Description" Field Read-Only After Submission.
 function onLoad() {
     // Check if the record is NOT new
     if (!g_form.isNewRecord()) {
-        g_form.setReadOnly('description', true);
+        g_form.setReadOnly('short_description', true);
     }
 }
 
