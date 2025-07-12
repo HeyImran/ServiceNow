@@ -1,3 +1,7 @@
+/*
+Select the BR after Update
+*/
+
 (function executeRule(current, previous) {
 
     if (current.state == 106 && previous.state != 106) {
