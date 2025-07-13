@@ -3,7 +3,7 @@
 var toReturnActiveIncidentsForAcaller = Class.create();
 toReturnActiveIncidentsForAcaller.prototype = Object.extendsObject(AbstractAjaxProcessor, {
     getIncidents: function() {
-        var user = this.getParamter('sysparm_caller');
+        var user = this.getParameter('sysparm_caller');
         var result = [];
         var gr = new GlideRecord('incident');
         gr.addQuery('caller_id', user);
