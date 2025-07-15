@@ -1,0 +1,48 @@
+Name: GetUserDetails
+Client Callable: ✅ Check
+
+Accessible from: All Application Scopes (or restrict to your app)
+
+
+var GetUserDetails = Class.create();
+GetUserDetails.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    getUserInfo: function() {
+        var userId = this.getParameter('sysparm_user_id');
+        var result = {};
+
+        var userGR = new GlideRecord('sys_user');
+        if (userGR.get(userId)) {
+            result.location = userGR.location.getDisplayValue();
+            result.manager = userGR.manager.getDisplayValue();
+            result.phone = userGR.phone + '';
+        }
+
+        return new JSON().encode(result);
+    }
+
+});
+✅ Step 2: Client-Side Script (GlideAjax)
+You can place this in a Client Script (e.g., Catalog Client Script, or form Client Script):
+
+🔹 Example: Auto-populate fields on selecting a user
+
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+
+    var ga = new GlideAjax('GetUserDetails');
+    ga.addParam('sysparm_name', 'getUserInfo');
+    ga.addParam('sysparm_user_id', newValue); // sys_id of selected user
+    ga.getXMLAnswer(function(response) {
+        var result = JSON.parse(response);
+
+        // Set values to form fields
+        g_form.setValue('location', result.location);
+        g_form.setValue('manager', result.manager);
+        g_form.setValue('phone', result.phone);
+    });
+}
+💡 This assumes the fields on the form are also named location, manager, and phone. Adjust as per your field names.
+
