@@ -1,0 +1,19 @@
+var ga = new GlideAggregate('incident');
+
+// Set date range: beginning to end of this month
+var startOfMonth = new GlideDateTime();
+startOfMonth.setDisplayValue(gs.beginningOfThisMonth());
+
+var endOfMonth = new GlideDateTime();
+endOfMonth.setDisplayValue(gs.endOfThisMonth());
+
+// Add filter conditions
+ga.addQuery('sys_created_on', '>=', startOfMonth);
+ga.addQuery('sys_created_on', '<=', endOfMonth);
+ga.addAggregate('COUNT');
+ga.query();
+
+if (ga.next()) {
+    var count = ga.getAggregate('COUNT');
+    gs.print('Incident Count This Month: ' + count);
+}
