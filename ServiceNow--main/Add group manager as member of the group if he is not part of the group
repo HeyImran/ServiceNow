@@ -28,3 +28,33 @@
     }
 
 })(current, previous);
+
+
+
+Own Script:
+
+
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    var mg = current.manager;
+    var grp = current.sys_id;
+    if (!mg.hasNext()){
+        gs.addInfoMessage('There is no Manager to Check');
+    } else {
+        gs.addInfoMessage('Group Manager is: ' + mg.getDisplayValue());
+    }
+
+    var grPM = new GlideRecord('sys_user_grmember');
+    grPM.addQuery('group', current.sys_id);
+	grPM.addQuery('user', current.manager);
+	grPM.query();
+    if (!grPM.hasNext()) {
+		var amd = new GlideRecord('sys_user_grmember');
+        amd.initialize();
+        amd.group = current.sys_id;
+        amd.user = current.manager;
+        amd.insert();
+    } else gs.addInfoMessage('Manager is already part of the group');
+
+})(current, previous);
