@@ -1,0 +1,47 @@
+Script Includes:
+
+
+var getCallerIncidents = Class.create();
+getCallerIncidents.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    getUserI: function() {
+        var user = this.getParameter('sysparm_user');
+        var inc = new GlideRecord('incident');
+        inc.addQuery('assigned_to', user);
+        inc.query();
+        var incidents = [];
+        while (inc.next())
+            incidents.push(inc.getValue('number'));
+        var result = {
+            number: incidents,
+            count: inc.getRowCount()
+        }
+
+        return JSON.stringify(result);
+    },
+
+    type: 'getCallerIncidents'
+});
+
+
+Glide Ajax:
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+
+   var ga = new GlideAjax('getCallerIncidents');
+   ga.addParam('sysparm_name','getUserI');
+   ga.addParam('sysparm_user', g_form.getValue('assigned_to'));
+   ga.getXMLAnswer(function(response){
+	var re = JSON.parse(response);
+if(re.count>0){	
+	alert("The number of Incidents assigned to the assignee are:  " + re.count + "And the incidents are" +re.number.join(', '));
+	}else
+		alert('There are no incidents assigned to this user');
+	}
+   });
+   
+   
+}
