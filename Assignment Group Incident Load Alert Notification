@@ -1,0 +1,112 @@
+Objective:
+Send an automatic notification to assignment group managers when their group has 10 or more active incidents.
+
+Step-by-Step Implementation
+
+1. Script Include
+
+Name: moreThan10Incidents
+Purpose: Count active incidents grouped by assignment group
+
+var moreThan10Incidents = Class.create();
+moreThan10Incidents.prototype = {
+    initialize: function() {},
+
+    get10Incidents: function() {
+        var nT = new GlideAggregate('incident');
+        nT.addAggregate('COUNT');
+        nT.addQuery('active', true);
+        nT.groupBy('assignment_group');
+        nT.orderBy('assignment_group');
+        nT.query();
+
+        var out = [];
+        while (nT.next()) {
+            var count = parseInt(nT.getAggregate('COUNT'), 10);
+            var groupSysId = nT.getValue('assignment_group');
+
+            if (count >= 10 && groupSysId) {
+                out.push({
+                    gSysID: groupSysId,
+                    value: count
+                });
+            }
+        }
+        return out;
+    },
+
+    type: 'moreThan10Incidents'
+};
+
+2. Scheduled Script Execution
+
+var helper = new moreThan10Incidents();
+var result = helper.get10Incidents();
+
+for (var i = 0; i < result.length; i++) {
+    var groupGR = new GlideRecord('sys_user_group');
+    if (groupGR.get(result[i].gSysID)) {
+        var manager = groupGR.getValue('manager');
+
+        if (manager) {
+            // Send event with manager sys_id and "count::group name" as parm2
+            gs.eventQueue(
+                'custom.group.incident.alert',
+                null, // No GlideRecord context needed
+                manager, // parm1: manager sys_id
+                result[i].value + '::' + groupGR.getDisplayValue() // parm2
+            );
+        }
+    }
+}
+3. Scripted Event
+
+Navigate to: System Policy > Events > Registry
+
+Name: custom.group.incident.alert
+
+Table: incident
+
+Event Name: custom.group.incident.alert
+
+4. Notification Configuration
+
+Navigate to: System Notification > Email > Notifications
+
+Name: SendNotificationToGroupManager
+
+Send When: Event is Fired
+
+Event Name: custom.group.incident.alert
+
+Table: incident
+
+Active: True
+
+Recipients: Leave blank, use script
+
+When to send script:
+(function runScript(current, template, email, email_action, event) {
+    var user = new GlideRecord('sys_user');
+    if (user.get(event.parm1)) {
+        email.addAddress("to", user.email);
+    }
+
+    // Split parm2 for count and group name
+    if (event.parm2) {
+        var parts = event.parm2.split('::');
+        template.print("Group Name: " + parts[1]);
+        template.print("Incident Count: " + parts[0]);
+    }
+})();
+
+Email Message Template:
+
+Hello ${user.first_name},
+
+Your assignment group "${Group Name}" currently has ${Incident Count} active incidents.
+
+Please review and take necessary actions.
+
+Regards,
+ServiceNow Team
