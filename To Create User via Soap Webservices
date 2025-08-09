@@ -1,0 +1,55 @@
+(function scriptedWebServiceOperation(request, response) {
+
+	var validation = validationList()
+		if(validation== true){
+			var newUSer = new GlideRecord('sys_user');
+			newUSer.initialize();
+			newUSer.first_name = request.FirstName;
+			newUSer.last_name = request.LastName;
+			newUSer.title = request.Title;
+			newUSer.user_name = request.FirstName+ '.'+request.LastName;
+			newUSer.u_fullname = request.FirstName+ ' '+request.LastName;
+			newUSer.department = request.Department;
+			newUSer.manager = request.Manager;
+			newUSer.location = request.Location;
+			var userSysID = newUSer.insert();
+			response.Result = "User is Created in SNOW!!:)";
+			response.UserID = newUSer.user_name;
+			response.FullName = newUSer.u_fullname;
+			response.Sys_ID = userSysID.toString();
+
+		}else{
+			response.Result = validation;
+		}
+	function validationList(){
+		if(request.FirstName){
+			if(request.LastName){
+				if(request.Title){
+					if(request.Department){
+						if(request.Manager){
+							if(request.Location){
+								return true;
+							}else{
+								return "Please Enter the Location.";
+							}
+
+						}else{
+							return "Please Enter the Manager name";
+						}
+
+					}else{
+						return "Please Enter the Department.";
+					}
+
+				}else{
+					return "Please Enter the Title.";
+				}
+
+			}else{
+				return "Please Enter the Last Name.";
+			}
+		}else{
+			return "Please Enter the First Name.";
+		}
+	}
+})(request, response);
