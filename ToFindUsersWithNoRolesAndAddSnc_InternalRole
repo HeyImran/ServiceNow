@@ -1,0 +1,22 @@
+var allUsers = new GlideRecord('sys_user');
+allUsers.addActiveQuery();
+allUsers.query();
+
+while(allUsers.next()){
+	var count = 0;
+	var userID = allUsers.sys_id.toString();
+	var checkRoles = new GlideRecord('sys_user_has_role');
+	checkRoles.addQuery('user', userID);
+	if(!checkRoles.next()){
+		var createUsers = new GlideRecord('sys_user_has_role');
+		createUsers.initialize();
+		createUsers.role = '7fcaa702933002009c8579b4f47ffbde';
+		createUsers.user = userID;
+		createUsers.insert ();
+		count ++;
+	}else{
+		gs.info("Every User has snc_internal Role");
+	}
+
+}
+gs.info("The number of users inserted: " +count);
