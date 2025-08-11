@@ -3,7 +3,6 @@ WSDL URL: https://dev199613.service-now.com/createUserInSnow.do?WSDL
 var allUsers = new GlideRecord('sys_user');
 allUsers.addActiveQuery();
 allUsers.query();
-
 while(allUsers.next()){
 	var count = 0;
 	var userID = allUsers.sys_id.toString();
