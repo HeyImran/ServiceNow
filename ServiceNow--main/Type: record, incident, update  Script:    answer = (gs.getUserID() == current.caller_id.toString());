@@ -1,3 +1,0 @@
-Type: record, incident, update 
-Script:   
-answer = (gs.getUserID() == current.caller_id.toString());
