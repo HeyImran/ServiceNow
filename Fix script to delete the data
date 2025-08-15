@@ -1,0 +1,8 @@
+var inc = new GlideRecord('incident');
+inc.addEncodedQuery('state!=1^ORstate=NULL^number=INC0010029');
+inc.query();
+if(inc.next()){
+	inc.deleteRecord();
+	inc.setWorkflow(false);
+	inc.update();
+}
