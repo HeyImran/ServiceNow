@@ -1,0 +1,22 @@
+var user = new GlideRecord('sys_user');
+user.addActiveQuery();
+user.setLimit(5);
+user.query();
+var all5Users = [];
+while(user.next()){
+	var allUsers= {
+		name: user.first_name.toString(),
+		fullName: user.u_fullname.toString(),
+		email: user.email.toString()
+	};	
+	all5Users.push(JSON.stringify(allUsers));
+}
+gs.info(all5Users);
+
+
+*** Script:
+{"name":"","fullName":" ","email":".@example.com"},
+{"name":"Abel","fullName":"Abel Tuter","email":"abel.tuter@example.com"},
+{"name":"Abraham","fullName":"Abraham Lincoln","email":"abraham.lincoln@example.com"},
+{"name":"Adam","fullName":"Adam Cruz","email":"jakemorales@osborne-johnson.net"},
+{"name":"Adam","fullName":"Adam Ringle","email":"adam.ringle@example.com"}
