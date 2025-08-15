@@ -8,6 +8,15 @@ while(inc.next()){
 }
 
 
+for (var i = 1; i <= 10; i++) {
+    var gr = new GlideRecord('incident');
+    gr.initialize();
+    gr.autoSysFields(false); // Prevent system fields from being updated
+    gr.short_description = "Test incidents #" + i + " without updating system fields";
+    gr.insert();
+}
+
+
 Out Put:
 
 *** Script: number:INC0010006 short_description:t
