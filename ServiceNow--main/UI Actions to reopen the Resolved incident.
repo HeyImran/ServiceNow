@@ -1,8 +1,0 @@
-Condition:
-current.state ==6
-
-Script:
-current.state = 2;
-current.work_notes = 'Reopened by User';
-current.update();
-action.setRedirectURL(current); 
