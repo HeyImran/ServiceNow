@@ -1,9 +1,0 @@
-function onSubmit() { 
-var group = g_form.getValue('assignment_group'); 
-var assignedTo = g_form.getValue('assigned_to'); 
-if (!group || !assignedTo) { 
-alert('Please select both Assignment Group and Assigned To.'); 
-return false; 
-} 
-return true; 
-}
