@@ -1,6 +1,0 @@
-function onChange(control, oldValue, newValue, isLoading) { 
-if (isLoading || newValue == '') return; 
-if (newValue == 'hardware') { 
-g_form.setValue('subcategory', 'laptop'); 
-} 
-}
