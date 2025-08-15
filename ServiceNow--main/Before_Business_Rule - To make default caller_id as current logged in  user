@@ -1,5 +1,0 @@
-(function executeRule(current, previous /*null when async*/) {
-
-	current.caller_id = gs.getUserID();
-
-})(current, previous);
