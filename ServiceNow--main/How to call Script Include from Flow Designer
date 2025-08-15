@@ -1,8 +1,0 @@
-Use Action → Script Step 
-
-
-var inc = new GlideRecord('incident'); 
-if (inc.get(inputs.incSysId)) { 
-inc.priority = 2; 
-inc.update(); 
-}
