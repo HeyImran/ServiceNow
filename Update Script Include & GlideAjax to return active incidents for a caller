@@ -1,0 +1,37 @@
+//Script Inclde
+
+var toReturnActiveIncidentsForAcaller = Class.create();
+toReturnActiveIncidentsForAcaller.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getIncidents: function() {
+        var user = this.getParameter('sysparm_caller');
+        var result = [];
+        var gr = new GlideRecord('incident');
+        gr.addQuery('caller_id', user);
+        gr.addActiveQuery();
+        gr.query();
+        while (gr.next()) {
+            result.push(gr.getValue('number'));
+        }
+        return JSON.stringify(result);
+
+    },
+
+    type: 'toReturnActiveIncidentsForAcaller'
+});
+
+
+//GlideAjax
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    var ga = new GlideAjax('toReturnActiveIncidentsForAcaller');
+    ga.addParam('sysparm_name', 'getIncidents');
+    ga.addParam('sysparm_caller', g_form.getValue('caller_id'));
+    ga.getXMLAnswer(function(response) {
+        var incidents = JSON.parse(response);
+        alert("Open Incidents: " + incidents.join(', '));
+    });
+
+}
