@@ -1,0 +1,27 @@
+var cabGroup = new GlideRecord('sys_user_grmember');
+cabGroup.addQuery('group.name', 'CAB Approval Group');  // Change group name as needed
+cabGroup.addQuery('user', gs.getUserID());
+cabGroup.query();
+if (cabGroup.next()) {
+  answer = true;
+}
+else {
+  answer = (current.requested_by == gs.getUserID());
+}
+
+
+///Another Script
+
+
+// Check if user has cab_approver role
+if (gs.hasRole('cab_approver')) {
+  answer = true;
+}
+// Check if the current user is the requester of the change
+else if (current.requested_by == gs.getUserID()) {
+  answer = true;
+}
+// Optional: check if user belongs to a CAB group (optional enhancement)
+else {
+  answer = false;
+}
