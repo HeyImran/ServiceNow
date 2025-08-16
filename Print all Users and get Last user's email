@@ -28,29 +28,24 @@ if (allUsers.length > 0) {
 
 This is another script *//////////////////////////////////////////
 
-var users = [];
-var gr = new GlideRecord('sys_user');
-gr.addQuery('active', true);
-gr.orderBy('sys_created_on'); // Ensures the last one is the latest created
-gr.query();
-
-while (gr.next()) {
-    users.push({
-        sys_id: gr.getValue('sys_id'),
-        name: gr.getDisplayValue('name'),
-        email: gr.getValue('email'),
-        department: gr.getDisplayValue('department'),
-        phone: gr.getValue('phone')
+var allUsers = [];
+var users = new GlideRecord('sys_user');
+users.addActiveQuery();
+users.orderBy('sys_created_on');
+users.query();
+while (users.next()) {
+    allUsers.push({
+        name: users.getDisplayValue('name'),
+        phone: users.getValue('mobile_phone'),
+        dept: users.getDisplayValue('department'),
+        manager: users.getDisplayValue('manager')
     });
 }
-
-// Print all users
-gs.info("All Users: " + JSON.stringify(users, null, 2));
-
-// Get last user details
-if (users.length > 0) {
-    var lastUser = users[users.length - 1];
-    gs.info("Last User Details: " + JSON.stringify(lastUser, null, 2));
+gs.info("All Users are: " +allUsers.length);
+gs.info(JSON.stringify(allUsers, null, 2));
+if(allUsers.length>0){
+	var lastUser = allUsers[allUsers.length-1];
+	gs.info("The last user is: "+JSON.stringify(lastUser, null, 2));
 }
 
 
