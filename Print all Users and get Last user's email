@@ -1,28 +1,23 @@
+var store =[];
 var user = new GlideRecord('sys_user');
-user.orderBy('name');
+user.setLimit(4);
 user.query();
-
-var allUsers = [];
-
-// Step 1: Collect user data and push as JSON string
-while (user.next()) {
-    var data = {
-        name: user.name.toString(),
-        email: user.email.toString(),
-        mobile: user.mobile_phone.toString()
-    };
-    allUsers.push(JSON.stringify(data)); // store as string
+while(user.next()){
+	var data = {
+		name: user.getDisplayName('name'),
+		manager: user.getDisplayName('manager'),
+		email: user.email.toString(),
+		location: user.getDisplayName('location')
+	};
+	store.push(data);
+}
+gs.info(JSON.stringify(store));
+if(store.length>0){
+var lastRec = store[store.length-1];
+gs.info('The Last record is: '+ JSON.stringify(lastRec));
+gs.info("The Last user email is: "+ lastRec.email);
 }
 
-// Step 2: Print all users
-gs.info("The Number of Users are : " + allUsers.length);
-gs.info(allUsers.join('\n'));
-
-// Step 3: Parse last user and get email
-if (allUsers.length > 0) {
-    var lastUserObj = JSON.parse(allUsers[allUsers.length - 1]);
-    gs.info("Last User Email: " + lastUserObj.email);
-}
 
 /*//////////////////////////////////////////////////////////////////////////
 
