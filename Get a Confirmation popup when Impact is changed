@@ -1,0 +1,13 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    if (oldValue== 3 && newValue==1||newValue==2) {
+        var answer = confirm("Are you sure to change the impact of the incident to: " + newValue);
+        if (answer) {
+            g_form.showFieldMsg('impact', 'You have changed the impact to' + newValue, 'info', true);
+            g_form.save();
+        } else {
+            g_form.setValue('impact', oldValue);
+        }
+    }
