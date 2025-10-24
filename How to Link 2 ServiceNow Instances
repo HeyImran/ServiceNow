@@ -1,0 +1,75 @@
+I wanted to Integrate 2 instances of ServiceNow each Other.
+
+My 2 instances are: 
+https://dev199613.service-now.com/
+https://dev197094.service-now.com/
+
+Source instance will be: https://dev199613.service-now.com/
+And the Target will be: https://dev197094.service-now.com/
+
+My Script Inlude is: 
+
+var MyIntegration = Class.create();
+MyIntegration.prototype = {
+    initialize: function() {},
+    triggerCreate: function(incGR) {
+        var request = new sn_ws.RESTMessageV2('ToGet The incidents from other instance', 'create_incident');
+
+        request.setStringParameterNoEscape('sd', incGR.short_description);
+        request.setStringParameterNoEscape('desc', incGR.description);
+        request.setStringParameterNoEscape('ctype', incGR.contact_type);
+		request.setStringParameterNoEscape('user_name', incGR.caller_id);
+		request.setStringParameterNoEscape('cate', incGR.category);
+		request.setStringParameterNoEscape('scat', incGR.subcategory);
+		request.setStringParameterNoEscape('ci', incGR.cmdb_ci);
+        var response = request.execute();
+        var responseBody = response.getBody();
+        var status = response.getStatusCode();
+        var outObj = JSON.parse(responseBody);
+        var updateInc = new GlideRecord('incident');
+        updateInc.addQuery('sys_id', incGR.sys_id);
+        updateInc.query();
+        if (updateInc.next()) {
+            updateInc.u_clientsysid = outObj.result.sys_id;
+            updateInc.setWorkflow(false);
+            updateInc.update();
+        }
+        gs.log(" The response body is " + responseBody + "and the status code is " + status, 'This is for integration');
+    },
+
+    triggerUpdate: function(incGR) {
+        var request = new sn_ws.RESTMessageV2('ToGet The incidents from other instance', 'update_incident');
+
+        request.setStringParameterNoEscape('sd', incGR.short_description);
+        request.setStringParameterNoEscape('desc', incGR.description);
+        request.setStringParameterNoEscape('ctype', incGR.contact_type);
+		request.setStringParameterNoEscape('user_name', incGR.caller_id);
+		request.setStringParameterNoEscape('cate', incGR.category);
+		request.setStringParameterNoEscape('scat', incGR.subcategory);
+		request.setStringParameterNoEscape('ci', incGR.cmdb_ci);
+        request.setStringParameterNoEscape('clientid', incGR.u_clientsysid);
+        var response = request.execute();
+        var responseBody = response.getBody();
+        var status = response.getStatusCode();
+		gs.log(" The EP is" + request.getEndpoint(), 'This is for integration');
+        gs.log(" The response body is " + responseBody + "and the status code is " + status, 'This is for integration');
+    },
+
+    type: 'MyIntegration'
+};
+
+And My BR is : 
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+	if(current.assignment_group.getDisplayValue()=='Application Development'&&!current.u_clientsysid){
+		new MyIntegration().triggerCreate(current);
+	}else
+	if(current.assignment_group.getDisplayValue()=='Application Development'&&current.u_clientsysid){
+		new MyIntegration().triggerUpdate(current);
+	}
+
+
+})(current, previous);
+
+Result was Successful. And can be able to update and create the incident from one to other automatically.
