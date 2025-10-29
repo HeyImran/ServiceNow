@@ -1,0 +1,7 @@
+var inc = new GlideRecord('incident');
+inc.addQuery('state','!=','7');
+inc.addQuery('assignment_group',gs.getProperty('getNetworkGroup'));
+inc.query();
+while(inc.next()){
+	gs.print(inc.number);
+}
