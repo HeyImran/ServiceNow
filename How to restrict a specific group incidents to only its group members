@@ -1,0 +1,19 @@
+There are situations where an incidents with specific assignment group(s) to restrict visibility only to it group members. Though this can be achieved using read ACLs, but it may force restricted users to get access through other read ACLs or OOB readACLs on that table.
+
+Since it is not suggested to disable other ACLs, we can restrict incidents of specific group from visibility via before-query business rule
+
+Resolution
+Steps to Perform
+
+Create a Before -Query Business rule on 'Incident' table
+In the Advanced tab, set the condition as:
+!gs.getUser().isMemberOf('<group name to be restricted for other users>') 
+In the script field, update sys_id of the group to be restricted
+ 
+
+(function executeRule(current, previous /*null when async*/ ) {
+var grp = current.addNullQuery('assignment_group').addOrCondition('assignment_group','!=','<sys_id of the group to be restricted for other users>');
+})(current, previous);
+ 
+
+This Before-Query Business rules restrict the incidents assigned to the specific group visible only to those group members
