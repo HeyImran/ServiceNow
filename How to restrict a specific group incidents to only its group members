@@ -5,7 +5,7 @@ Since it is not suggested to disable other ACLs, we can restrict incidents of sp
 For Specific Group:
 
 Resolution
-Steps to Perform
+Steps to Perform.
 
 Create a Before -Query Business rule on 'Incident' table
 In the Advanced tab, set the condition as:
