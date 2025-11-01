@@ -2,6 +2,8 @@ There are situations where an incidents with specific assignment group(s) to res
 
 Since it is not suggested to disable other ACLs, we can restrict incidents of specific group from visibility via before-query business rule
 
+For Specific Group:
+
 Resolution
 Steps to Perform
 
@@ -17,3 +19,34 @@ var grp = current.addNullQuery('assignment_group').addOrCondition('assignment_gr
  
 
 This Before-Query Business rules restrict the incidents assigned to the specific group visible only to those group members
+
+
+For Default Group or to work for everyone:
+
+Steps to Perform
+
+Create a Before -Query Business rule on 'Incident' table
+In the Advanced tab, set the condition as:
+!gs.getUser().isMemberOf('<group name to be restricted for other users>') 
+In the script field, update sys_id of the group to be restricted
+
+(function executeRule(current, previous /*null when async*/) {
+    // Get the groups the current user is a member of
+    var userGroups = gs.getUser().getMyGroups(); 
+    
+    // Create an array to hold the sys_ids of the user's groups
+    var groupSysIds = [];
+    for (var i = 0; i < userGroups.size(); i++) {
+        groupSysIds.push(userGroups.get(i).getSysID());
+    }
+
+    // Add a query condition to only show incidents assigned to the user's groups
+    // or incidents where the assignment group is empty (if needed, otherwise remove the OR condition)
+    current.addQuery('assignment_group', 'IN', groupSysIds)
+           .addOrCondition('assignment_group', ''); // Allows users to see unassigned incidents
+
+    // Optional: Add conditions for other visibility requirements (e.g., caller can see their own incidents)
+    current.addOrCondition('caller_id', gs.getUserID());
+
+})(current, previous);
+
