@@ -12,9 +12,24 @@ Populate the Assignment groups which are having more than 10 Incidents
 var inc = new GlideAggregate('incident');
 inc.addNotNullQuery('assignment_group');
 inc.addAggregate('COUNT');
-inc.addAggregate('COUNT','assignment_group');
+inc.groupBy('assignment_group');
 inc.addHaving('COUNT','>',10);
 inc.query();
 while(inc.next()){
 	gs.print(inc.getDisplayValue('assignment_group') + ' Count -->'+ inc.getAggregate('COUNT'));
+}
+
+By using ParseInt
+
+var inc = new GlideAggregate('incident');
+inc.addNotNullQuery('assignment_group');
+inc.addAggregate('COUNT');
+inc.addAggregate('COUNT', 'assignment_group');
+inc.query();
+while (inc.next()) {
+    var count = inc.getAggregate('COUNT', 'assignment_group');
+    var numcount = parseInt(count, 10);
+    if (numcount > 10) {
+        gs.print(inc.getDisplayValue('assignment_group') + ' Count --> ' + numcount);
+    }
 }
