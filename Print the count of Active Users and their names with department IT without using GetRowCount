@@ -1,0 +1,12 @@
+var user = new GlideRecord('sys_user');
+user.addActiveQuery();
+user.addQuery('department.name','IT');
+user.query();
+var count = 0;
+var allusers = [];
+while(user.next()){	
+    allusers.push(user.getDisplayValue());       
+    count++;
+}
+gs.print("Total IT users: " + count);
+gs.print(allusers.join(', '));
