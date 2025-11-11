@@ -5,3 +5,16 @@ ga.query();
 while (ga.next()) { 
 gs.info(ga.getDisplayValue('assignment_group') + ': ' + ga.getAggregate('COUNT'));
 }
+
+
+Populate the Assignment groups which are having more than 10 Incidents
+
+var inc = new GlideAggregate('incident');
+inc.addNotNullQuery('assignment_group');
+inc.addAggregate('COUNT');
+inc.addAggregate('COUNT','assignment_group');
+inc.addHaving('COUNT','>',10);
+inc.query();
+while(inc.next()){
+	gs.print(inc.getDisplayValue('assignment_group') + ' Count -->'+ inc.getAggregate('COUNT'));
+}
