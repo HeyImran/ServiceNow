@@ -3,8 +3,8 @@ inc.addAggregate('COUNT');
 inc.addNotNullQuery('category');
 inc.addAggregate('COUNT', 'category');
 inc.groupBy('category');
-//inc.groupBy('subcategory');
+inc.groupBy('subcategory');
 inc.query();
 while(inc.next()){
-	gs.print('The incidents are '+' '+ inc.getDisplayValue('category') +' '+ inc.getAggregate('COUNT'));
+	gs.print('The incidents are '+' '+ inc.getDisplayValue('category') +' and '+ inc.getDisplayValue('subcategory') +' are '+ inc.getAggregate('COUNT'));
 }
