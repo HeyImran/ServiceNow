@@ -6,3 +6,17 @@ gr.query();
 while (gr.next()) {
     gs.info('Incident Number: ' + gr.number );
 }
+
+If you want to get the incidents created today upto this time
+
+var inc = new GlideRecord('incident');
+inc.addQuery('sys_created_on',">=", gs.beginningOfToday());
+inc.addQuery('sys_created_on','<=',gs.nowGlideDateTime());
+inc.query();
+var count = 0;
+var allInc = [];
+while(inc.next()){
+	allInc.push(inc.number.toString());
+	count++;
+}
+gs.print(allInc.join(', '));
