@@ -1,0 +1,8 @@
+var inc = new GlideAggregate('incident');
+inc.addAggregate('COUNT');
+inc.groupBy('category');
+inc.addHaving('COUNT','>',10);
+inc.query();
+while(inc.next()){
+gs.print(inc.category+ " Count --> "+ inc.getAggregate('COUNT'))
+}
