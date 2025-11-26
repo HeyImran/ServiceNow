@@ -1,0 +1,10 @@
+javascript: 'manager=' + current.variables.requested_by
+
+
+
+This is used to populate the groups that are owned by logged in User in the Catalog Item in a variable.
+
+We need to create a variable with Reference type and table should be groups table.
+
+Under the advanced tab, we can use this simple to load only groups for which the user is the group manager.
+
