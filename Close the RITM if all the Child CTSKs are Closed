@@ -22,3 +22,24 @@ BR: After Update BR
     }
 
 })(current, previous);
+
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    // Add your code here
+    var checkCTSK = new GlideRecord('sc_task');
+    checkCTSK.addQuery('request_item', current.request_item);
+    checkCTSK.addActiveQuery();
+    checkCTSK.query();
+    if (!checkCTSK.next()) {
+        var parentRITM = new GlideRecord('sc_req_item');
+        parentRITM.addQuery('sys_id', current.request_item);
+        parentRITM.query();
+        if (parentRITM.next()) {
+            parentRITM.state = 3;
+            parentRITM.work_notes = current.number + '\n'+ current.work_notes.getJournalEntry(1);
+            parentRITM.update();
+        }
+    }
+
+})(current, previous);
