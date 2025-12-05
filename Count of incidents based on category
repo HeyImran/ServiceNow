@@ -8,3 +8,17 @@ inc.query();
 while(inc.next()){
 	gs.print('The incidents are '+' '+ inc.getDisplayValue('category') +' and '+ inc.getDisplayValue('subcategory') +' are '+ inc.getAggregate('COUNT'));
 }
+
+//This will allow you to count the incidents with related to CI
+
+
+var inc = new GlideAggregate('incident');
+inc.addAggregate('COUNT','cmdb_ci');
+//inc.addAggregate('COUNT');
+inc.addQuery('cmdb_ci','!=','');
+inc.query();
+while(inc.next()){
+	if(parseInt(inc.getAggregate('COUNT','cmdb_ci'),10)>1){
+		gs.print("The CI are "+ inc.getDisplayValue('cmdb_ci')+' and Incidents are '+ inc.getAggregate('COUNT','cmdb_ci'));
+	}
+}
