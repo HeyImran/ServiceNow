@@ -1,0 +1,14 @@
+var nrmlUser = new GlideRecord('sys_user');
+nrmlUser.addActiveQuery();
+nrmlUser.query();
+var allitilUser = [];
+while(nrmlUser.next()){
+	var itilUser = new GlideRecord('sys_user_has_role');
+	itilUser.addQuery('user',nrmlUser.sys_id);
+	itilUser.addQuery('role.name','itil');
+	itilUser.query();
+	if(!itilUser.next()){
+		allitilUser.push(nrmlUser.name.toString());
+	}
+}
+gs.print(allitilUser.join(', '));
