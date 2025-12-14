@@ -1,0 +1,20 @@
+var users = new GlideRecord('sys_user');
+users.addActiveQuery();
+users.query();
+while (users.next()) {
+    var sncRoleUser = new GlideRecord('sys_user_has_role');
+    sncRoleUser.addQuery('user', users.sys_id)
+    sncRoleUser.addQuery('role.name', 'snc_internal');
+    sncRoleUser.query();
+    var count = 0;
+    var allUpdatedUsers = [];
+    if (!sncRoleUser.next()) {
+        var addSnc = new GlideRecord('sys_user_has_role');
+        addSnc.initialize();
+        addSnc.user = users.sys_id;
+        addSnc.role = '7fcaa702933002009c8579b4f47ffbde';
+        addSnc.insert();
+        allUpdatedUsers.push(users.name.toString());
+    }
+    gs.info(allUpdatedUsers.join(', '));
+}
