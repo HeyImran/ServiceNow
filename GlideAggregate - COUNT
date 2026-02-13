@@ -5,3 +5,14 @@ gaInc.query();
 if(gaInc.next()){
     gs.info(gaInc.getAggregate("COUNT"));
 }
+
+
+
+var gr = new GlideAggregate('incident');
+gr.addAggregate('COUNT','category');
+gr.groupBy('category');
+gr.groupBy('subcategory');
+gr.query();
+while(gr.next()){
+	gs.info('The number of Incidents with category '+ gr.category+' and Subcategory '+ gr.subcategory+' are '+gr.getAggregate('COUNT','category'));
+}
