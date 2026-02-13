@@ -1,0 +1,116 @@
+HCL 1st Round:
+
+Q: When group manager is added to the group, if the group manager is not part of the group, then he should be added automatically. And if he is part of the group then an InfoMessage should popup mentioning Manager is already member of the group.
+
+Q: When CallerID selected in the Incident, then it should auto populate callerID email.
+
+Q: What is the difference between Display and Async BR.
+
+Q: What's the Difference between GlideRecord and GlideAggregate? And when do you we need to use them?
+
+Q: How do you create a Email Notification in ServiceNow?
+
+Q: What is the difference between Business Rule and Flow Designer? And when do we need to use them?
+
+Q: 
+
+PWC 1st Round:
+
+Q: Array given, Populate the last record from it.
+
+Q: String given, Populate the Last record email from it.
+
+Q: Count of Incidents group by Category and Subcategory.
+
+Q: User was able to raise P1 tickets to a particular group. All in a Sudden, User wasn't able to create P1 to that particular group but can be able to create P2 and P3 Incidents and user is getting error Key Constraints word in it. All BRs and ACLs are fine. How do you troubleshoot this?
+
+Q: How do you allow only 60% of approvers should approve the Change request to move to the next state via Flow Designer?
+
+Q:What is the difference between Incident and Problem?
+
+Q: What is meant by Script Actions in ServiceNow?
+
+Q: How to hide Submit/Order button in the catalog Item?
+
+Q: How to remove the ITIL access for the user who are using the ITIL access from past 90 days?
+
+Q: How to trigger the approvals in Flow Designer in Sequential and parallel way? How to make anyone of the user should approve the request from each group so that it move to the next stage?
+
+Q: How do you create a RITM weekly once and what is your approach? And what are the steps that you will follow?
+
+KPMG 1st Round:
+
+Q: Count of Incidents group by Category and Subcategory.
+
+Q: If an incident contains urgent in the short description, then state should be updated to P2.
+
+Q: If User is selected in the caller field, if the user is inactive, it should be throw an error message that user is inactive and please select the active user to proceed and then should change the user back to old User.
+
+Q: Users with only ITIL role should be able to update the assignment group.
+
+2nd Round: 
+
+Q: How do you create a catalog item which should allow users to select options for a field based on User grade?
+Ex: If User is having grade greater than 5, then he should have 3 options. Home, Car and Mobile. Else he should have only 2 options. Credit Card and Health Insurance.
+
+Q: How do you edit the assignment group label for incidents alone?
+
+Q: How do you cancel the child CTSK when the parent RITM cancelled and you should cancel only open CTSK?
+
+Q: What are the types of Integrations and how to do you do them and what are the issues that you have faced while working with integrations and how do you resolved then?
+
+Q: What are the integrations that you have done and how do you resolve the issues while doing?
+
+Q: What are the types of HTTP methods in ServiceNow?
+
+Q: What are Integrations in ServiceNow?
+
+Q: I wanted to get a report with P1 incident by everyday in the Morning 6AM. I want to write a Business Rule for that. Tell me what do you want me to do? And tell me what can be the other ways to do?
+
+Q: What is Flow Designer and WorkFlow Editor?
+
+Q: What is the difference between Request and Change Request?
+
+Q: What are the types of Change request available in ServiceNow?
+
+Q: If a user is not able to raise a Emergency Change, What is the approach that you will follow to troubleshoot this issue?
+
+Q: What is your approach to debug Flows?
+
+Q: How do you Debug client scripts?
+
+Q: How do you Debug Server Side scripts (Business Rules)?
+
+Q: How do you Debug ACLs?
+
+Q: Tell me the ServiceNow Best Practices?
+
+Q: Tell me when will you use After BR and Async BR?
+
+Q: Tell me the execution order of when form is loaded and when the form is submitted?
+
+Q: Tell me how the ACLs will work? And Tell me the execution order of ACLs.
+
+Q: I am having 2 ACL with one the same field. One is executing as True and One is as False. Tell me if the user will get the access to the Form or not?
+
+Q: What are Script includes? How many types of script includes are there? What is the use of Script include?
+
+Q: What is Display BR and what is the core use of Display BR?
+
+Q: In how many ways we can get the Server side data to Client side? What is the best approach?
+
+Q: Tell me the difference between getRef and g_scratchpad?
+
+Q: What is the use of Flows? and Tell me where we can't use flows and should prefer Legacy workflows?
+
+Q: How do you call SubFlows?
+
+Q: Why you choose ServiceNow?
+
+Q: Why do you want to join our organisation?
+
+Q: What is the toughest thing that you have faced in the Work and how do you resolve it.
+
+Q: What is the biggest achievement for you so far in the work?
+
+Any Questions for me?
